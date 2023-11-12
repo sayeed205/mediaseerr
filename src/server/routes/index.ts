@@ -1,7 +1,29 @@
-import Elysia from "elysia";
-import { countController } from "./hello-world";
+import swagger from '@elysiajs/swagger';
+import Elysia from 'elysia';
 
-const apiApp = new Elysia({ prefix: "/api" }).use(countController);
+import { status } from '@/server/routes/v1';
+
+const apiApp = new Elysia({ prefix: '/api' })
+    .group('/v1', v1 => v1.use(status))
+    .use(
+        swagger({
+            autoDarkMode: true,
+            documentation: {
+                info: {
+                    title: 'Mediaseerr API',
+                    version: '0.0.0',
+                    description: 'Mediaseerr API Documentation',
+                },
+                tags: [
+                    {
+                        name: 'Public',
+                        description:
+                            'Public API endpoints requiring no authentication.',
+                    },
+                ],
+            },
+        }),
+    );
 
 export default apiApp;
 export type API = typeof apiApp;
