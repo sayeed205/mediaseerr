@@ -1,0 +1,5 @@
+tab_width = 4
+use_spaces = True
+indent_size = 4
+insert_final_newline = true
+charset = utf-8
