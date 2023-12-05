@@ -10,7 +10,7 @@ export type API = typeof app;
 app.onRequest(async ctx => {
     const path = new URL(ctx.request.url);
     if (path.pathname.startsWith('/api')) return;
-    return await handleBun(ctx.request);
+    return await handleBun(ctx.request, app);
 });
 
 // start the server

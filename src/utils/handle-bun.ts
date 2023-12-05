@@ -1,5 +1,6 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import { initialize } from 'next/dist/server/lib/router-server';
+
+import { IncomingMessage, ServerResponse } from 'http';
 
 // required globals for translating Bun API to Node
 const INTERNAL_SOCKET_DATA = Symbol.for('::bunternal::');
@@ -17,7 +18,7 @@ const [handle, handleUpgrade] = await initialize({
 /**
  * Handles Next.JS routes
  */
-export const handleBun = (req: Request) => {
+export const handleBun = (req: Request, app: any) => {
     return new Promise<Response | void>(resolve => {
         // Convert to a Node request
         // @ts-ignore
