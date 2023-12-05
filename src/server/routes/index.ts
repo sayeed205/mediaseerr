@@ -1,10 +1,11 @@
 import swagger from '@elysiajs/swagger';
 import Elysia from 'elysia';
 
-import { status } from '@/server/routes/v1';
+import { settings, status } from '@/server/routes/v1';
 
 const apiApp = new Elysia({ prefix: '/api' })
     .group('/v1', v1 => v1.use(status))
+    .group('/v1/settings', ctx => ctx.use(settings))
     .use(
         swagger({
             autoDarkMode: true,
@@ -19,6 +20,10 @@ const apiApp = new Elysia({ prefix: '/api' })
                         name: 'Public',
                         description:
                             'Public API endpoints requiring no authentication.',
+                    },
+                    {
+                        name: 'Settings',
+                        description: 'Settings API endpoints.',
                     },
                 ],
             },

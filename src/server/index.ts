@@ -3,9 +3,13 @@ import Elysia from 'elysia';
 import apiApp from '@/server/routes';
 import { handleBun } from '@/utils';
 
+import { prepare } from './prepare-server';
+
 // Initialize the server
 const app = new Elysia().use(apiApp);
 export type API = typeof app;
+
+await prepare();
 
 app.onRequest(async ctx => {
     const path = new URL(ctx.request.url);

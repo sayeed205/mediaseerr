@@ -5,3 +5,5 @@ export * from './external-api';
 export * from './github-api';
 export * from './handle-bun';
 export * from './logger';
+export * from './restart-flag';
+export * from './settings';

@@ -1,11 +1,16 @@
 import Elysia from 'elysia';
 
 import {
+    publicStatusAppDataResponse,
+    publicStatusResponse,
+} from '@/server/swagger/public';
+import {
     GithubAPI,
     appDataPath,
     appDataStatus,
     getAppVersion,
     getCommitTag,
+    restartFlag,
 } from '@/utils';
 
 export const status = new Elysia()
@@ -58,10 +63,19 @@ export const status = new Elysia()
                 commitTag: getCommitTag(),
                 updateAvailable,
                 commitsBehind,
-                //todo)) restartRequired: restartFlag.isSet(),
+                restartRequired: restartFlag.isSet(),
             };
         },
-        { detail: { tags: ['Public'] } },
+        {
+            detail: {
+                tags: ['Public'],
+                summary: 'Get Mediaseerr status',
+                description:
+                    'Returns the current Mediaseerr status in a JSON object.',
+                responses: publicStatusResponse,
+                security: [],
+            },
+        },
     )
     .get(
         '/status/appdata',
@@ -69,5 +83,14 @@ export const status = new Elysia()
             appData: appDataStatus(),
             appDataPath: appDataPath(),
         }),
-        { detail: { tags: ['Public'] } },
+        {
+            detail: {
+                tags: ['Public'],
+                summary: 'Get application data volume status',
+                description:
+                    'For Docker installs, returns whether or not the volume mount was configured properly. Always returns true for non-Docker installs.',
+                responses: publicStatusAppDataResponse,
+                security: [],
+            },
+        },
     );
